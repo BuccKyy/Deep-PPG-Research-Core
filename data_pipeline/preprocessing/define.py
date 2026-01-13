@@ -1,0 +1,3 @@
+MIMIC3_URL = 'mimic3wdb/1.0/'
+LEN = 1350 #350
+NUM_OVERLAP = 1350-250 # 100

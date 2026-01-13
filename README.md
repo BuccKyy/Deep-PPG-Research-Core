@@ -111,37 +111,53 @@ This framework addresses these challenges through:
 
 ```mermaid
 graph TB
-    subgraph "Data Acquisition"
-        A[Raw PPG Signals<br/>Serial/BLE] --> B[Quality Check<br/>SQI > 0.7]
+    subgraph Data_Acquisition["Data Acquisition"]
+        A["Raw PPG Signals
+        Serial/BLE"] --> B["Quality Check
+        SQI > 0.7"]
     end
     
-    subgraph "Signal Processing"
-        B --> C[Bandpass Filter<br/>0.5-10 Hz]
-        C --> D[Baseline Removal<br/>Polynomial Detrend]
-        D --> E[Normalization<br/>MinMax [0,1]]
-        E --> F[Segmentation<br/>1024 samples]
-        F --> G[Feature Extraction<br/>Time/Freq/Morph]
+    subgraph Signal_Processing["Signal Processing"]
+        B --> C["Bandpass Filter
+        0.5-10 Hz"]
+        C --> D["Baseline Removal
+        Polynomial Detrend"]
+        D --> E["Normalization
+        MinMax 0-1"]
+        E --> F["Segmentation
+        1024 samples"]
+        F --> G["Feature Extraction
+        Time/Freq/Morph"]
     end
     
-    subgraph "Data Preparation"
-        G --> H[Train/Val/Test Split<br/>70/15/15]
-        H --> I[Data Augmentation<br/>Noise/Scale/Shift]
-        I --> J[TFRecord Creation<br/>Optimized I/O]
+    subgraph Data_Preparation["Data Preparation"]
+        G --> H["Train/Val/Test Split
+        70/15/15"]
+        H --> I["Data Augmentation
+        Noise/Scale/Shift"]
+        I --> J["TFRecord Creation
+        Optimized I/O"]
     end
     
-    subgraph "Model Training"
-        J --> K[Model Architecture<br/>CNN-LSTM/U-Net/etc]
-        K --> L[Training Loop<br/>Adam/Adadelta]
-        L --> M[Validation<br/>Early Stopping]
+    subgraph Model_Training["Model Training"]
+        J --> K["Model Architecture
+        CNN-LSTM/U-Net/etc"]
+        K --> L["Training Loop
+        Adam/Adadelta"]
+        L --> M["Validation
+        Early Stopping"]
         M --> N{Converged?}
         N -->|No| L
         N -->|Yes| O[Best Model]
     end
     
-    subgraph "Evaluation"
-        O --> P[Test Set Evaluation<br/>MAE, RMSE, r]
-        P --> Q[Clinical Validation<br/>Bland-Altman]
-        Q --> R[Model Export<br/>TFLite/ONNX]
+    subgraph Evaluation["Evaluation"]
+        O --> P["Test Set Evaluation
+        MAE, RMSE, r"]
+        P --> Q["Clinical Validation
+        Bland-Altman"]
+        Q --> R["Model Export
+        TFLite/ONNX"]
     end
     
     style A fill:#e1f5ff
@@ -162,7 +178,7 @@ sequenceDiagram
 
     Data->>Prep: Raw PPG + BP Labels
     Prep->>Prep: Filter & Normalize
-    Prep->>Model: Preprocessed Segments<br/>[N, 1024, 1]
+    Prep->>Model: Preprocessed Segments N x 1024 x 1
     
     loop Training Epochs
         Model->>Train: Forward Pass
